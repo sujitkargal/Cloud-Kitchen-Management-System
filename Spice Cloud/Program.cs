@@ -25,8 +25,8 @@ builder.Services.AddSession(options =>
 builder.Services.AddSingleton(provider =>
 {
     var config = provider.GetRequiredService<IConfiguration>();
-    var key = config["rzp_test_RlqwCM8y5yZyj9"];
-    var secret = config["2eLHG68xQl6neUGwtHpTUysk"];
+    var key = config["Your Key"];
+    var secret = config["Your Secret"];
     return new RazorpayClient(key, secret);
 });
 
