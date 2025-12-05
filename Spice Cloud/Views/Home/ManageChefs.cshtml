@@ -1,0 +1,52 @@
+﻿@model List<Chef>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ManageChefs</title>
+</head>
+<body>
+
+
+    <h2 class="text-center mb-4">Manage Chefs</h2>
+
+    <table class="table table-bordered shadow">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Area</th>
+                <th>Speciality</th>
+                <th style="width: 180px;">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var chef in Model)
+            {
+                <tr>
+                    <td>@chef.Name</td>
+                    <td>@chef.Email</td>
+                    <td>@chef.Mobile</td>
+                    <td>@chef.Address</td>
+                    <td>@chef.Area</td>
+                    <td>@chef.Speciality</td>
+                    <td>
+                        <a href="@Url.Action("EditChef", "Home", new { id = chef.ChefId })" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="@Url.Action("DeleteChef", "Home", new { id = chef.ChefId })" class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this chef?')">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>

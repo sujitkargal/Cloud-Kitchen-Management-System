@@ -1,0 +1,137 @@
+﻿@model Spice_Cloud.Models.User
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Login - Cloud Kitchen</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .login-container {
+            height: 100vh;
+        }
+
+        .login-left {
+            background: linear-gradient(90deg, #FF6A00, #EE0979);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .login-left img {
+                max-width: 70%;
+            }
+
+        .login-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 50px;
+        }
+
+            .login-right h2 {
+                margin-bottom: 30px;
+                font-weight: 700;
+                color: #333;
+            }
+
+        .btn-login {
+            background: linear-gradient(90deg, #FF6A00, #EE0979);
+            border: none;
+            color: white;
+            font-weight: 600;
+        }
+
+        .register-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+            .register-link a {
+                color: #EE0979;
+                font-weight: 600;
+                text-decoration: none;
+            }
+
+                .register-link a:hover {
+                    text-decoration: underline;
+                }
+
+        .forgot-link {
+            text-align: right;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <img src="~/images/Chef.png" class="loader-logo" />
+        <h3 class="loader-text">Loading Spice Cloud...</h3>
+    </div>
+
+    <div class="container-fluid login-container">
+        <div class="row h-100">
+            <!-- Left Logo -->
+            <div class="col-md-6 login-left">
+                <img src="~/images/User.png" alt="Cloud Kitchen Logo" />
+            </div>
+
+            <!-- Right Login Form -->
+            <div class="col-md-6 login-right">
+                <h2>User Login</h2>
+
+                @if (TempData["MessageU"] != null)
+                {
+                    <p style="color:red">@TempData["MessageU"]</p>
+                }
+
+                @using (Html.BeginForm("UserLogin", "Home", FormMethod.Post))
+                {
+                    <div class="mb-3">
+                        @Html.Label("Email")
+                        @Html.TextBox("email", null, new { @class = "form-control", placeholder = "Enter email" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.Label("Password")
+                        @Html.Password("password", null, new { @class = "form-control", placeholder = "Enter password" })
+                    </div>
+
+                  @*   <div class="forgot-link">
+                        <a asp-controller="Home" asp-action="ForgotUserPassword">Forgot Password?</a>
+                    </div> *@
+
+                    <button type="submit" class="btn btn-login w-100 mt-3">Login</button>
+                }
+
+                <div class="register-link">
+                    <p>Don't have an account? <a asp-controller="Home" asp-action="UserRegister">Register here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener("load", function () {
+            let loader = document.getElementById("loader");
+            loader.classList.add("fade-out");
+
+            setTimeout(() => loader.style.display = "none", 500);
+        });
+    </script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

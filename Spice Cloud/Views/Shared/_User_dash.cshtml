@@ -1,0 +1,156 @@
+﻿@{
+    Layout = null;
+    var fullName = TempData["UserName"] as string ?? "User";
+
+    // Take first letter of first and last word
+    var initials = string.Join("", fullName
+                        .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                        .Select(n => n[0]))
+                        .ToUpper();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .cart-icon {
+            font-size: 1.3rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+            .cart-icon:hover {
+                color: #ffd700;
+            }
+
+        .btn-logout {
+            border-radius: 50px;
+            padding: 5px 15px;
+            font-weight: 500;
+        }
+
+        .user-initials {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ffd700;
+            color: #000;
+            font-weight: bold;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .fade-out {
+            opacity: 0;
+            transition: 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div id="loader" class="loader">
+        <img src="~/images/loading.png" class="loader-logo" />
+        <h3 class="loader-text ms-3">Loading Spice Cloud...</h3>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/Home/UserDashboard">SpiceCloud</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/Home/UserDashboard">Home</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/ViewCart">
+                            View Cart // <i class="bi bi-cart3 cart-icon" title="View Cart"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/Home/UserOrders">Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Home/Favorites">Favorites</a></li>
+                </ul>
+
+                <!-- Profile / Initials Dropdown -->
+                <div class="dropdown">
+                    <div class="user-initials dropdown-toggle" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false" title="@fullName">
+                        @initials
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li><h6 class="dropdown-header">@fullName</h6></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="post" action="/Home/UserLogout">
+                                <button class="dropdown-item" type="submit">
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        @RenderBody()
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Loader fade out
+        window.addEventListener("load", function () {
+            let loader = document.getElementById("loader");
+            loader.classList.add("fade-out");
+            setTimeout(() => loader.style.display = "none", 500);
+        });
+
+        // Cart icon click
+        document.addEventListener("DOMContentLoaded", function () {
+            const cartIcon = document.querySelector(".cart-icon");
+            if (cartIcon) {
+                cartIcon.addEventListener("click", function () {
+                    window.location.href = "/User/Orders";
+                });
+            }
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

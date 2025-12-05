@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Spice_Cloud.Models.Dish>
+@{
+    ViewData["Title"] = "ChefDish";
+    Layout = "~/Views/Shared/_ChefLayout.cshtml";
+}
+
+
+
+@{
+    ViewBag.Title = "My Dishes";
+}
+
+<h2>My Dishes</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Dish Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dish in Model)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(dish.ImagePath))
+                    {
+                        <img src="@dish.ImagePath" width="100" />
+                    }
+                </td>
+                <td>@dish.DishName</td>
+                <td>@dish.Category</td>
+                <td>@dish.Price.ToString("C")</td>
+                <td>@dish.Discount %</td>
+                <td>@dish.Description</td>
+                <td>
+                    <a class="btn btn-sm btn-primary" href="@Url.Action("UpdateDish", new { id = dish.Id })">Edit</a>
+                    <form asp-action="DeleteDish" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@dish.Id" />
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-success" href="@Url.Action("AddDish")">Add New Dish</a>

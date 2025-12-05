@@ -1,0 +1,70 @@
+﻿@model List<Spice_Cloud.Models.CartViewModel>
+
+@{
+    ViewData["Title"] = "My Cart";
+    Layout = "~/Views/Shared/_User_dash.cshtml";
+}
+
+<h2>My Cart</h2>
+
+@if (!Model.Any())
+{
+    <h4>Your cart is empty.</h4>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Dish</th>
+                <th>Price</th>
+                <th>Discount (%)</th>
+                <th>Final Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                decimal total = item.FinalPrice * item.Quantity;
+
+                <tr>
+                    <td>
+                        <img src="@item.ImagePath" width="80" height="80" style="border-radius:5px" />
+                    </td>
+                    <td>@item.DishName</td>
+                    <td>₹@item.Price</td>
+                    <td>@item.Discount %</td>
+                    <td><b>₹@item.FinalPrice</b></td>
+                    <td>@item.Quantity</td>
+                    <td><b>₹@total</b></td>
+
+                    <td>
+                        <form asp-action="RemoveFromCart" method="post">
+                            <input type="hidden" name="cartId" value="@item.CartId" />
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                Remove
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <hr />
+    <h3 class="text-end">
+        Grand Total:
+        <span style="font-weight:bold; color:green;">
+            ₹@Model.Sum(i => i.FinalPrice * i.Quantity)
+        </span>
+    </h3>
+
+    <div class="text-end">
+        <a href="/Payment/Index" class="btn btn-success btn-lg">Proceed to Payment</a>
+    </div>
+}

@@ -1,0 +1,93 @@
+﻿@model Spice_Cloud.Models.PaymentViewModel
+
+@{
+    ViewData["Title"] = "Make Payment";
+    Layout = "~/Views/Shared/_User_dash.cshtml";
+}
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<h2 class="text-center mb-4">Complete Payment</h2>
+
+<div class="d-flex justify-content-center">
+    <div class="payment-card text-center p-4 shadow rounded">
+        <i class="fas fa-credit-card fa-3x mb-3 text-white"></i>
+        <h4 class="mb-3 text-white">Pay ₹@(Model.Amount / 100)</h4>
+        <div id="rzp-button" class="btn btn-light btn-lg">
+            <i class="fas fa-wallet me-2"></i> Pay Now
+        </div>
+    </div>
+</div>
+
+<style>
+    .payment-card {
+        width: 300px;
+        background: linear-gradient(135deg, #FF7F50, #FF4500); /* Orange gradient */
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .payment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+        }
+
+    #rzp-button {
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #FF4500;
+    }
+
+        #rzp-button:hover {
+            background-color: #ffe6dc;
+        }
+
+    h4, i.fas.fa-credit-card {
+        color: white;
+    }
+</style>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+    var options = {
+        "key": "@Model.Key",
+        "amount": "@Model.Amount",
+        "currency": "@Model.Currency",
+        "name": "Spice Cloud",
+        "description": "Order Payment",
+        "order_id": "@Model.OrderId",
+
+        "handler": function (response) {
+            var form = document.createElement('form');
+            form.method = "POST";
+            form.action = "/Payment/Success";
+
+            form.innerHTML = `
+                <input type="hidden" name="razorpay_payment_id" value="${response.razorpay_payment_id}" />
+                <input type="hidden" name="razorpay_order_id" value="${response.razorpay_order_id}" />
+                <input type="hidden" name="razorpay_signature" value="${response.razorpay_signature}" />
+            `;
+
+            document.body.appendChild(form);
+            form.submit();
+        },
+
+        "theme": {
+            "color": "#F37254"
+        }
+    };
+
+    document.getElementById('rzp-button').onclick = function (e) {
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+        e.preventDefault();
+    }
+</script>

@@ -1,0 +1,55 @@
+﻿@model List<Spice_Cloud.Models.ChefOrderViewModel>
+@{
+    ViewData["Title"] = "ChefOrders";
+    Layout = "~/Views/Shared/_ChefLayout.cshtml";
+}
+
+
+
+<h2>My Orders</h2>
+
+@if (!Model.Any())
+{
+    <p>No orders found.</p>
+}
+else
+{
+    foreach (var order in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-header">
+                <strong>Order ID:</strong> @order.OrderId |
+                <strong>Date:</strong> @order.OrderDate.ToString("dd MMM yyyy HH:mm") |
+                <strong>Status:</strong> @order.Status |
+                <strong>Total:</strong> ₹@order.TotalAmount
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Dish</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                            <th>Final Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in order.Items)
+                        {
+                            <tr>
+                                <td>@item.Dish.DishName</td>
+                                <td>@item.Quantity</td>
+                                <td>₹@item.Price</td>
+                                <td>@item.Discount %</td>
+                                <td>₹@item.FinalPrice</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
+
+

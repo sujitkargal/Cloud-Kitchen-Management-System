@@ -1,0 +1,244 @@
+﻿
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@* <style>
+    .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0;
+    }
+
+    .image-background {
+        width: 850px;
+        height: 650px;
+     border-radius: 15px;
+        background: linear-gradient(
+        to bottom right,
+        #ffffff 100%, /* top-left */
+        #f2f2f2 3%, /* top-right */
+        #dcdcdc 66%, /* bottom-left */
+        #e0e0e0 100% /* bottom-right */
+        );
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .full-body-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 5px;
+        display: block;
+    }
+</style>
+
+<div class="container image-container">
+    <div class="image-background">
+        <img src="~/images/PosterMain1.png"
+             alt="Cloud Kitchen"
+             class="full-body-image" />
+    </div>
+</div> *@
+
+
+
+
+
+<style>
+ 
+    .dish-card {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        transition: 0.3s;
+    }
+
+        .dish-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+    .dish-image {
+        height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+        width: 100%;
+    }
+
+    .dish-title {
+        font-weight: 600;
+        margin-top: 10px;
+        font-size: 1.2rem;
+    }
+
+    .dish-price {
+        color: #28a745;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    .dish-description {
+        font-size: 0.95rem;
+        margin: 10px 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .btn-add-cart {
+        background-color: #ff5722;
+        border: none;
+        color: white;
+    }
+
+        .btn-add-cart:hover {
+            background-color: #e64a19;
+        }
+
+    .search-input, .search-select {
+        border-radius: 8px;
+        padding-left: 15px;
+        height: 48px;
+        transition: 0.3s ease;
+    }
+
+        .search-input:focus, .search-select:focus {
+            border-color: #ff5722;
+            box-shadow: 0 0 7px rgba(255, 87, 34, 0.5);
+        }
+</style>
+
+<div class="container mt-4">
+
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-8 mb-2 mb-md-0">
+            <input type="text" id="search"
+                   class="form-control form-control-lg search-input"
+                   placeholder="🔍 Search dishes...">
+        </div>
+
+        <div class="col-md-4">
+            <select id="category" class="form-control form-control-lg search-select">
+                <option value="All">All Categories</option>
+                <option value="Veg">Veg</option>
+                <option value="Non-Veg">Non-Veg</option>
+              
+            </select>
+        </div>
+    </div>
+
+    <div class="row" id="dishContainer"></div>
+    <div id="loading" class="text-center my-3" style="display:none;"><strong>Loading...</strong></div>
+    <div id="noResults" class="text-center my-3" style="display:none;"><strong>No dishes found.</strong></div>
+
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        var page = 1;
+        var loading = false;
+        var endReached = false;
+
+        function loadDishes(reset = false) {
+            if (loading) return;
+            loading = true;
+            $('#loading').show();
+            $('#noResults').hide();
+
+            if (reset) {
+                page = 1;
+                endReached = false;
+                $('#dishContainer').html('');
+            }
+
+            $.get('@Url.Action("LoadDishes", "Home")',
+                {
+                    page: page,
+                    search: $('#search').val(),
+                    category: $('#category').val()
+                },
+                function (data) {
+
+                    if (data.length === 0) {
+                        if (page === 1) $('#noResults').show();
+                        endReached = true;
+                    } else {
+                        data.forEach(function (dish) {
+                            $('#dishContainer').append(`
+                                <div class="col-md-4 mb-4">
+                                    <div class="dish-card h-100 shadow-sm">
+                                        <img src="${dish.imagePath || '/images/placeholder.png'}" class="dish-image" />
+                                        <div class="dish-title">${dish.dishName}</div>
+                                        <div class="dish-description">${dish.description}</div>
+
+                                        <div class="dish-price">
+                                            ${
+                                                dish.discount > 0
+                                                ? `<span style="text-decoration:line-through;">₹${dish.price}</span>
+                                                   ₹${(dish.price - (dish.price * dish.discount / 100))}`
+                                                : `₹${dish.price}`
+                                            }
+                                        </div>
+
+                                        <div class="d-grid">
+                                            <input type="number" class="form-control mb-2 quantity" value="1" min="1" max="3"/>
+                                            <button class="btn btn-add-cart btn-block add-to-cart" data-id="${dish.id}">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `);
+                        });
+                        page++;
+                    }
+
+                    loading = false;
+                    $('#loading').hide();
+                });
+        }
+
+        loadDishes();
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+                if (!endReached) loadDishes();
+            }
+        });
+
+        $('#search, #category').on('keyup change', function () {
+            loadDishes(true);
+        });
+
+        // Add-to-Cart
+        $(document).on('click', '.add-to-cart', function () {
+            var dishId = $(this).data('id');
+            var quantity = $(this).siblings('.quantity').val();
+
+            $.post('@Url.Action("AddToCart", "Home")',
+                { DishId: dishId, Quantity: quantity },
+                function (res) {
+                    if (res.loginRequired) {
+                        alert(res.message);
+                        window.location.href = "/Home/UserLogin";
+                        return;
+                    }
+
+                    if (res.success) {
+                        alert(res.message + ' (Total Items: ' + res.cartCount + ')');
+                    } else {
+                        alert(res.message);
+                    }
+                });
+        });
+    </script>
+}
+
+   
+

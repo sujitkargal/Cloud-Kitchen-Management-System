@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "AdminLogin";
+   
+}
+<link rel="stylesheet" href="~/css/site.css" />
+
+
+<div class="container d-flex justify-content-center align-items-center" style="height:90vh">
+    <div class="col-md-4 glass-card">
+        <h2 class="text-center mb-4">Admin Login</h2>
+
+        @if (TempData["MessageA"] != null)
+        {
+            <div class="alert alert-warning">@TempData["MessageA"]</div>
+        }
+
+        <form method="post">
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" name="email" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label>Password</label>
+                <input type="password" name="password" class="form-control" required />
+            </div>
+
+            <button type="submit" class="btn-premium">Login</button>
+
+            <div class="text-center mt-3">
+                @* <a href="/Home/ForgotAdminPassword" class="text-info">Forgot Password?</a><br /> *@
+                <a href="/Home/AdminRegister" class="text-info">Create Account</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+

@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Cloud Kitchen</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/cloud_kitchen.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #fafafa;
+        }
+
+        .navbar-premium {
+            background: linear-gradient(90deg, #FF6A00, #EE0979);
+            padding: 12px 20px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+        }
+
+            .navbar-premium .nav-link,
+            .navbar-premium .navbar-brand {
+                color: white !important;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+            }
+
+                .navbar-premium .nav-link:hover {
+                    opacity: 0.9;
+                }
+
+        .navbar-toggler {
+            background-color: rgba(255,255,255,0.6);
+            border-radius: 6px;
+        }
+
+        .container-content {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background: linear-gradient(90deg, #EE0979, #FF6A00);
+            padding: 20px 0;
+            text-align: center;
+            color: white;
+            border-radius: 20px 20px 0 0;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-top: 50px;
+        }
+
+            footer a {
+                color: #ffe6d9;
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+                footer a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+</head>
+
+<body>
+
+   
+    <div id="startup-loader" class="fade">
+        <img src="images/Startup_Logo.png" class="startup-logo" alt="Startup Logo" />
+    </div>
+
+ 
+    <div id="loader" class="fade">
+        <img src="images/Chef.png" class="loader-logo" alt="Page Loader Logo" />
+        <h3 class="loader-text">Loading Spice Cloud...</h3>
+    </div>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-premium shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-cloud"></i> Spice Cloud
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navMenu">
+
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown">
+                                Login
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="ChefLogin">Chef Login</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="UserLogin">User Login</a></li>
+                                <li><a class="dropdown-item" asp-controller="Home" asp-action="AdminLogin">Admin Login</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container container-content">
+        @RenderBody()
+    </div>
+
+    <footer>
+        © 2025 Cloud Kitchen •
+        <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+       
+        setTimeout(() => {
+            const startup = document.getElementById("startup-loader");
+            startup.classList.add("hide");
+
+            setTimeout(() => {
+                startup.style.display = "none";
+            }, 500);
+        }, 500);
+
+       
+        window.addEventListener("load", function () {
+            setTimeout(() => {
+                const loader = document.getElementById("loader");
+                loader.classList.add("hide");
+
+                setTimeout(() => {
+                    loader.style.display = "none";
+                }, 500);
+            }, 500);
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

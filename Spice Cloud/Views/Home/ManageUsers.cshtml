@@ -1,0 +1,51 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ManageUsers</title>
+</head>
+<body>
+
+    @model List<User>
+
+    <h2 class="text-center mb-4">Manage Users</h2>
+
+    <table class="table table-bordered shadow">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Area</th>
+                <th style="width: 180px;">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td>@user.Mobile</td>
+                    <td>@user.Address</td>
+                    <td>@user.Area</td>
+                    <td>
+                        <a href="@Url.Action("EditUser", "Home", new { id = user.Id })" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="@Url.Action("DeleteUser", "Home", new { id = user.Id })" class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this user?')">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>

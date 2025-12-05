@@ -1,0 +1,47 @@
+﻿@model Spice_Cloud.Models.Admin
+@{
+    ViewData["Title"] = "Admin Register";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+
+
+
+<div class="container d-flex justify-content-center align-items-center" style="height:90vh">
+    <div class="col-md-5 glass-card">
+        <h2 class="text-center mb-4">Admin Register</h2>
+
+        @if (TempData["MessageA"] != null)
+        {
+            <div class="alert alert-warning">@TempData["MessageA"]</div>
+        }
+
+        <form method="post">
+            <div class="mb-3">
+                <label>Name</label>
+                <input asp-for="Name" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label>Email</label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label>Password</label>
+                <input asp-for="Password" type="password" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label>Confirm Password</label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn-premium">Register</button>
+
+            <div class="text-center mt-3">
+                <a href="/Home/AdminLogin" class="text-info">Already have an account? Login</a>
+            </div>
+        </form>
+    </div>
+</div>
+

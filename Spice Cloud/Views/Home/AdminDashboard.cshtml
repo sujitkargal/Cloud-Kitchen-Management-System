@@ -1,0 +1,98 @@
+﻿
+@{
+    Layout = null;
+}
+
+@{
+    ViewBag.Title = "Admin Dashboard";
+}
+<style>
+
+
+body {
+    background: #f5f7fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 40px;
+}
+
+h2 {
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 40px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: none;
+    width: 320px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.card h3 {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #222;
+}
+
+.card p {
+    color: #555;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 6px;
+    width: 100%;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056d2;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #1e8738;
+}
+</style>
+<h2 class="text-center mb-4">Admin Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow p-4 text-center">
+            <h3>Manage Users</h3>
+            <p>View, update, or delete users.</p>
+            <a href="@Url.Action("ManageUsers", "Home")" class="btn btn-primary">Go to Users</a>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow p-4 text-center">
+            <h3>Manage Chefs</h3>
+            <p>View, update, or delete chefs.</p>
+            <a href="@Url.Action("ManageChefs", "Home")" class="btn btn-success">Go to Chefs</a>
+        </div>
+    </div>
+</div>

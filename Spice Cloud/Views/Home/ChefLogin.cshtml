@@ -1,0 +1,129 @@
+﻿@model Spice_Cloud.Models.Chef
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chef Login - Cloud Kitchen</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .login-container {
+            height: 100vh;
+        }
+
+        .login-left {
+            background: linear-gradient(90deg, #FF6A00, #EE0979);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .login-left img {
+                max-width: 70%;
+            }
+
+        .login-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 50px;
+        }
+
+            .login-right h2 {
+                margin-bottom: 25px;
+                font-weight: 700;
+                color: #333;
+            }
+
+        .btn-login {
+            background: linear-gradient(90deg, #FF6A00, #EE0979);
+            border: none;
+            color: white;
+            font-weight: 600;
+        }
+
+        .register-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+            .register-link a {
+                color: #EE0979;
+                font-weight: 600;
+                text-decoration: none;
+            }
+
+                .register-link a:hover {
+                    text-decoration: underline;
+                }
+
+        .form-control {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loader">
+        <img src="~/images/Chef.png" class="loader-logo" />
+        <h3 class="loader-text">Loading Spice Cloud...</h3>
+    </div>
+    <div class="container-fluid login-container">
+        <div class="row h-100">
+            <!-- Left Logo Section -->
+            <div class="col-md-6 login-left">
+                <img src="~/images/Chef.png" alt="Cloud Kitchen Logo" />
+            </div>
+
+            <!-- Right Login Section -->
+            <div class="col-md-6 login-right">
+                <h2>Chef Login</h2>
+
+                @if (TempData["MessageC"] != null)
+                {
+                    <p class="text-danger fw-bold">@TempData["MessageC"]</p>
+                }
+
+                @using (Html.BeginForm("ChefLogin", "Home", FormMethod.Post))
+                {
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="Enter your email" required />
+                    </div>
+                    <div class="mb-3">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Enter your password" required />
+                    </div>
+
+                    <button type="submit" class="btn btn-login w-100">Login</button>
+                }
+
+                <div class="register-link">
+                    <p>New Chef? @Html.ActionLink("Register here", "ChefRegister", "Home")</p>
+                    @* <p>@Html.ActionLink("Forgot Password?", "ForgotChefPassword", "Home")</p> *@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener("load", function () {
+            let loader = document.getElementById("loader");
+            loader.classList.add("fade-out");
+
+            setTimeout(() => loader.style.display = "none", 500);
+        });
+    </script>
+
+</body>
+</html>

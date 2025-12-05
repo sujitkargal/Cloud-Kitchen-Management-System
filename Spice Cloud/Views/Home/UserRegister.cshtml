@@ -1,0 +1,162 @@
+﻿@model Spice_Cloud.Models.User
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Register - Cloud Kitchen</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .login-container {
+            height: 100vh;
+        }
+
+        .login-left {
+            background: linear-gradient(90deg, #FF6A00, #EE0979);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .login-left img {
+                max-width: 70%;
+            }
+
+        .login-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 50px;
+        }
+
+            .login-right h2 {
+                margin-bottom: 30px;
+                font-weight: 700;
+                color: #333;
+            }
+
+        .btn-login {
+            background: linear-gradient(90deg, #FF6A00, #EE0979);
+            border: none;
+            color: white;
+            font-weight: 600;
+        }
+
+        .register-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+            .register-link a {
+                color: #EE0979;
+                font-weight: 600;
+                text-decoration: none;
+            }
+
+                .register-link a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+</head>
+<body>
+    <div id="loader">
+        <img src="~/images/Chef.png" class="loader-logo" />
+        <h3 class="loader-text">Loading Spice Cloud...</h3>
+    </div>
+    <div class="container-fluid login-container">
+        <div class="row h-100">
+            <!-- Left Logo -->
+            <div class="col-md-6 login-left">
+                <img src="~/images/User.png" alt="Cloud Kitchen Logo" />
+            </div>
+
+            <!-- Right Register Form -->
+            <div class="col-md-6 login-right">
+                <h2>User Registration</h2>
+
+                @if (TempData["MessageU"] != null)
+                {
+                    <p style="color:red">@TempData["MessageU"]</p>
+                }
+
+                @using (Html.BeginForm("UserRegister", "Home", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Name)
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter full name" })
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Mobile)
+                        @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", placeholder = "Enter mobile number" })
+                        @Html.ValidationMessageFor(m => m.Mobile)
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Email)
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Enter email" })
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Address)
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Enter address" })
+                        @Html.ValidationMessageFor(m => m.Address)
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Area)
+                        @Html.TextBoxFor(m => m.Area, new { @class = "form-control", placeholder = "Enter area" })
+                        @Html.ValidationMessageFor(m => m.Area)
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter password" })
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.ConfirmPassword)
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm password" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </div>
+
+                    <button type="submit" class="btn btn-login w-100">Register</button>
+                }
+
+                <div class="register-link">
+                    <p>Already registered? <a asp-controller="Home" asp-action="UserLogin">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        window.addEventListener("load", function () {
+            let loader = document.getElementById("loader");
+            loader.classList.add("fade-out");
+
+            setTimeout(() => loader.style.display = "none", 500);
+        });
+    </script>
+
+</body>
+</html>

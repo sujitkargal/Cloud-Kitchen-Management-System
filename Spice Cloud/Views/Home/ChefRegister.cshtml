@@ -1,0 +1,187 @@
+﻿@model Spice_Cloud.Models.Chef
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chef Register - Cloud Kitchen</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .login-container {
+            height: 100vh;
+        }
+
+        .login-left {
+            background: linear-gradient(90deg, #FF6A00, #EE0979);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .login-left img {
+                max-width: 70%;
+            }
+
+        .login-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 50px;
+        }
+
+            .login-right h2 {
+                margin-bottom: 25px;
+                font-weight: 700;
+                color: #333;
+            }
+
+        .btn-login {
+            background: linear-gradient(90deg, #FF6A00, #EE0979);
+            border: none;
+            color: white;
+            font-weight: 600;
+        }
+
+        .register-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+            .register-link a {
+                color: #EE0979;
+                font-weight: 600;
+                text-decoration: none;
+            }
+
+                .register-link a:hover {
+                    text-decoration: underline;
+                }
+
+        .form-control {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <img src="~/images/Chef.png" class="loader-logo" />
+        <h3 class="loader-text">Loading Spice Cloud...</h3>
+    </div>
+    <div class="container-fluid login-container">
+        <div class="row h-100">
+      
+            <div class="col-md-6 login-left">
+                <img src="~/images/Chef.png" alt="Cloud Kitchen Logo" />
+            </div>
+
+         
+            <div class="col-md-6 login-right">
+                <h2>Chef Registration</h2>
+
+                @if (TempData["MessageC"] != null)
+                {
+                    <p class="text-danger fw-bold">@TempData["MessageC"]</p>
+                }
+
+                @using (Html.BeginForm("ChefRegister", "Home", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="mb-3">@Html.LabelFor(m => m.Name) 
+                        @Html.TextBoxFor(m => m.Name, 
+                            new { @class = "form-control", placeholder = "Full Name" }) 
+                        @Html.ValidationMessageFor(m => m.Name, "", 
+                        new { @class = "text-danger" })</div>
+
+                    <div class="mb-3">@Html.LabelFor(m => m.Mobile) 
+                        @Html.TextBoxFor(m => m.Mobile, 
+                            new { @class = "form-control", placeholder = "Mobile Number" }) 
+                        @Html.ValidationMessageFor(m => m.Mobile, "", 
+                        new { @class = "text-danger" })
+                        </div>
+                    <div class="mb-3">@Html.LabelFor(m => m.Email) 
+                        @Html.TextBoxFor(m => m.Email, 
+                            new { @class = "form-control", placeholder = "Email" }) 
+                        @Html.ValidationMessageFor(m => m.Email, "", 
+                        new { @class = "text-danger" })
+                        </div>
+
+                    <div class="mb-3">@Html.LabelFor(m => m.Address) 
+                        @Html.TextBoxFor(m => m.Address, 
+                            new { @class = "form-control", placeholder = "Address" }) 
+                        @Html.ValidationMessageFor(m => m.Address, "", 
+                        new { @class = "text-danger" })
+                        </div>
+                    <div class="mb-3">@Html.LabelFor(m => m.Area) 
+                        @Html.TextBoxFor(m => m.Area, new { @class = "form-control", placeholder = "Area" }) 
+                        @Html.ValidationMessageFor(m => m.Area, "",
+                        new { @class = "text-danger" })
+                        </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(m => m.Speciality)
+                        @Html.DropDownListFor(
+                        m => m.Speciality,
+                                        new SelectList(new List<string>
+                                        {
+                                        "Maharashtrian",
+                                        "Punjabi",
+                                        "South Indian",
+                                        "North Indian",
+                                        "Hyderabadi",
+                                        "Biryani",
+                                        "Chinese"
+                                        }),
+                                        "Select Speciality",
+                                        new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Speciality, "", new { @class = "text-danger" })
+                </div>
+
+                    <div class="mb-3">@Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password, 
+                            new { @class = "form-control", placeholder = "Password" })
+                            @Html.ValidationMessageFor(m => m.Password, "",
+                            new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">@Html.LabelFor(m => m.ConfirmPassword) 
+                        @Html.PasswordFor(m => m.ConfirmPassword, 
+                            new { @class = "form-control", placeholder = "Confirm Password" }) 
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", 
+                            new { @class = "text-danger" })
+                    </div>
+
+                    <button type="submit" class="btn btn-login w-100">Register</button>
+                }
+
+                <div class="register-link">
+                    <p>Already registered? @Html.ActionLink("Login here", "ChefLogin", "Home")</p>
+                    <p>@Html.ActionLink("Forgot Password?", "ForgotChefPassword", "Home")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener("load", function () {
+            let loader = document.getElementById("loader");
+            loader.classList.add("fade-out");
+
+            setTimeout(() => loader.style.display = "none", 500);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+﻿@model Spice_Cloud.Models.Dish
+@{
+    ViewData["Title"] = "Update Dish";
+    Layout = "~/Views/Shared/_ChefLayout.cshtml";
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #fff4e6; /* soft orange background */
+    }
+
+    .form-container {
+        height: 100vh;
+    }
+
+    .form-left {
+        background: linear-gradient(90deg, #ff7e5f, #feb47b); /* orange gradient */
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .form-left img {
+            max-width: 60%;
+        }
+
+    .form-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 50px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+        .form-right h2 {
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: #e65100; 
+        }
+
+    .form-group label {
+        font-weight: 600;
+        color: #e65100; 
+    }
+
+    .btn-success {
+        background-color: #ff6f00; 
+        border-color: #ff6f00;
+    }
+
+        .btn-success:hover {
+            background-color: #e65100; 
+            border-color: #e65100;
+        }
+
+    img.current-image {
+        margin-top: 10px;
+        width: 150px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+</style>
+
+<div class="container-fluid form-container">
+    <div class="row h-100">
+
+     
+        <div class="col-md-6 form-left">
+            <img src="~/images/Dish.png" alt="Dish Logo" />
+        </div>
+
+       
+        <div class="col-md-6 form-right">
+            <h2>Update Dish</h2>
+
+            @using (Html.BeginForm("UpdateDish", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Id)
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DishName)
+                    @Html.TextBoxFor(m => m.DishName, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Category)
+                    @Html.TextBoxFor(m => m.Category, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Price)
+                    @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Discount)
+                    @Html.TextBoxFor(m => m.Discount, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Description)
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 4 })
+                </div>
+
+                <div class="mb-3">
+                    <label>Dish Image</label>
+                    <input type="file" name="ImageFile" class="form-control" />
+                    @if (!string.IsNullOrEmpty(Model.ImagePath))
+                    {
+                        <img src="@Model.ImagePath" alt="Current Image" class="current-image" />
+                    }
+                </div>
+
+                <button type="submit" class="btn btn-success mt-3">Update Dish</button>
+            }
+        </div>
+    </div>
+</div>
