@@ -151,7 +151,6 @@ If you want to improve Spice Cloud, fix bugs, or add new features:
 ![My Image](Outputs/04.png)
 ![My Image](Outputs/05.png)
 ![My Image](Outputs/06.png)
-![My Image](Outputs/06.png)
 ![My Image](Outputs/07.png)
 ![My Image](Outputs/08.png)
 ![My Image](Outputs/09.png)
