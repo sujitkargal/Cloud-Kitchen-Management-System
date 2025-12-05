@@ -115,10 +115,39 @@ dotnet run
 
 ---
 
-## Author
+* ## Author
+- Name: Sujit Kargal
 
-* **Name:** Sujit Kargal
-* **College:** SSMR College, Thane, Mumbai
-* **Project:** Semester Project – Cloud Kitchen
+---
+
+## 🤝 Contribute
+
+Contributions are welcome!
+
+If you want to improve Spice Cloud, fix bugs, or add new features:
+
+### ✔ How to Contribute
+
+1. **Fork** the repository  
+2. **Create a branch**  
+   ```bash
+   git checkout -b feature-name
+
+3. **Commit your changes**
+   ```bash
+   git commit -m "Add: your update"
+   
+4. **Push the branch
+   ```bash
+   git push origin feature-name
+
+5. Open a Pull Request
+  - Have feature ideas?
+
+   
+
+   
+
+
 
 
