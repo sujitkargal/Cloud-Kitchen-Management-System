@@ -144,6 +144,23 @@ If you want to improve Spice Cloud, fix bugs, or add new features:
 5. Open a Pull Request
   - Have feature ideas?
 
+**Output Sample **
+![My Image](Outputs/01.png)
+![My Image](Outputs/02.png)
+![My Image](Outputs/03.png)
+![My Image](Outputs/04.png)
+![My Image](Outputs/05.png)
+![My Image](Outputs/06.png)
+![My Image](Outputs/06.png)
+![My Image](Outputs/07.png)
+![My Image](Outputs/08.png)
+![My Image](Outputs/09.png)
+![My Image](Outputs/10.png)
+![My Image](Outputs/11.png)
+![My Image](Outputs/12.png)
+
+
+
    
 
    
