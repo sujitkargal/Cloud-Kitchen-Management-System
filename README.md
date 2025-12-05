@@ -143,8 +143,8 @@ If you want to improve Spice Cloud, fix bugs, or add new features:
 
 5. Open a Pull Request
   - Have feature ideas?
-
-**Output Sample **
+---
+## **Output Sample**
 ![My Image](Outputs/01.png)
 ![My Image](Outputs/02.png)
 ![My Image](Outputs/03.png)
@@ -159,7 +159,7 @@ If you want to improve Spice Cloud, fix bugs, or add new features:
 ![My Image](Outputs/11.png)
 ![My Image](Outputs/12.png)
 
-
+---
 
    
 
